@@ -3,12 +3,12 @@
     <input type="checkbox" :id="'checkbox-' + task.id" @click="toggleCompleted(task.id)" />
     <label :for="'checkbox-' + task.id">{{ task.title }}</label>
 
-    <button @click="deleteTask(task.id)">Delete</button>
+    <button @click="deleteTask()">Delete</button>
   </div>
 </template>
 
 <script>
-  import { eventBus } from '../main';
+  import { mapActions } from 'vuex';
 
   export default {
     props: {
@@ -18,11 +18,14 @@
       }
     },
     methods: {
-      toggleCompleted(id) {
-        eventBus.$emit('toogleCompleted', { id });
+      ...mapActions(['updateTask', 'removeTask']),
+
+      toggleCompleted() {
+        const updatedTasK = { ...this.task, completed: !this.task.completed };
+        this.updateTask(updatedTasK);
       },
-      deleteTask(id) {
-        eventBus.$emit('deleteTask', { id });
+      deleteTask() {
+        this.removeTask(this.task.id);
       }
     }
   }
@@ -34,13 +37,11 @@
     padding: 10px;
     border-bottom: 1px dotted #ccc;
   }
-  .is-completed {
+  .is-completed { 
     text-decoration: line-through;
   }
-  input[type="checkbox"], label {
-    cursor: pointer;
+  input[type="checkbox"], label { 
+    cursor: pointer; 
   }
-  button {
-    margin-left: 10px;
-  }
+  button { margin-left: 10px; }
 </style>

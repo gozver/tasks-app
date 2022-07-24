@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="task in tasksList" :key="task.id">
+    <div v-for="task in allTasks" :key="task.id">
       <app-task-item :task="task"></app-task-item>
     </div>
   </div>
@@ -8,16 +8,17 @@
 
 <script>
   import TaskItem from './TaskItem.vue';
+  import { mapActions, mapGetters } from 'vuex';
   
   export default {
     components: {
       appTaskItem: TaskItem
     },
-    props: {
-      tasksList: {
-        type: Array,
-        required: true
-      }
+    methods: {
+      ...mapActions(['fetchTasks'])
+    },
+    computed: {
+      ...mapGetters(['allTasks'])
     }
   }
 </script>
