@@ -1,0 +1,161 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "Tasks API for the Vue.js + Vuex Crash Course created by PragmaticReviews.com",
+      "version": "1.0.0",
+      "title": "Tasks API",
+      "contact": {
+        "email": "info@pragmaticreviews.com"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/task": {
+        "get": {
+          "summary": "Get All tasks",
+          "description": "",
+          "operationId": "fetchTasks",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all the tasks",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            },
+            "405": {
+              "description": "Invalid input"
+            }
+          }
+        },
+        "post": {
+          "summary": "Add a new task",
+          "description": "",
+          "operationId": "addTask",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Task object to be created.",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Task"
+              }
+            }
+          ],
+          "responses": {
+            "405": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/task/{taskId}": {
+        "put": {
+          "summary": "Updates a task",
+          "description": "",
+          "operationId": "updateTask",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "taskId",
+              "in": "path",
+              "description": "ID of task that needs to be updated",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Updated Task",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Task"
+              }
+            }
+          ],
+          "responses": {
+            "405": {
+              "description": "Invalid input"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Deletes a task",
+          "description": "",
+          "operationId": "deleteTask",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "taskId",
+              "in": "path",
+              "description": "Task id to delete",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Updated Task",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Task"
+              }
+            }
+          ],
+          "responses": {
+            "400": {
+              "description": "Invalid ID supplied"
+            },
+            "404": {
+              "description": "Task not found"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Task": {
+        "type": "object",
+        "required": [
+          "name",
+          "completed"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "5daa67e25967673780ccc4d9"
+          },
+          "name": {
+            "type": "string",
+            "example": "Task 1"
+          },
+          "completed": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
